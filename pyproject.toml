@@ -1,95 +1,18 @@
 [build-system]
-requires = ["setuptools", "wheel", "setuptools-rust", "setuptools-git-versioning"]
-build-backend = "setuptools.build_meta"
+requires = ["maturin>=1.4,<2.0"]
+build-backend = "maturin"
 
 [project]
-name = "itaxotools-taxi2"
-dynamic = ["version"]
-description = "Calculation and analysis of pairwise sequence distances"
-readme = "README.md"
-requires-python = ">=3.10.2, <4"
-keywords = []
-authors = [
-    { name = "Stefanos Patmanidis", email = "stefanpatman91@gmail.com" },
-    { name = "Vladimir Kharchev" },
-]
+name = "itaxotools-calculate-distances"
+requires-python = ">=3.8"
 classifiers = [
-    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
-    "Development Status :: 5 - Production/Stable",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = [
-    "itaxotools-common==0.3.2",
-    "itaxotools-spart-parser==0.1.2",
-    "BioPython>=1.80",
-    "alfpy",
-    "numpy",
-    "openpyxl",
-    "pandas",
-    "seaborn",
-]
+dynamic = ["version"]
 
-[project.optional-dependencies]
-dev = [
-    "setuptools-git-versioning",
-    "setuptools-rust",
-    "cibuildwheel",
-    "pre-commit",
-    "ruff",
-    "pytest",
-    "pytest-cov",
-    "coverage",
-]
-
-[project.scripts]
-taxi2 = "itaxotools.taxi2.taxi2:main"
-
-[project.urls]
-Homepage = "https://itaxotools.org/"
-Source = "https://github.com/iTaxoTools/TaxI2"
-
-[[tool.setuptools-rust.ext-modules]]
-target = "itaxotools.taxi2.calculate_distances"
-path = "src/itaxotools/taxi2/calculate_distances/Cargo.toml"
-binding = "PyO3"
-
-[tool.setuptools-git-versioning]
-dirty_template = "{tag}"
-dev_template = "{tag}"
-enabled = true
-
-[tool.ruff]
-ignore-init-module-imports = true
-extend-select = ["I"]
-
-[tool.ruff.lint.isort]
-known-first-party = ["itaxotools"]
-section-order = [
-    "future",
-    "pyqt",
-    "standard-library",
-    "third-party",
-    "first-party",
-    "local-folder",
-]
-
-[tool.ruff.lint.isort.sections]
-pyqt = ["PySide6"]
-
-[tool.coverage.run]
-source = ["itaxotools.taxi2"]
-
-[tool.coverage.report]
-exclude_lines = [
-    "def __repr__",
-    "raise NotImplementedError",
-    "@abstractmethod",
-]
-
-[tool.cibuildwheel]
-test-requires = "pytest"
-test-command = "pytest {project}/tests"
+[tool.maturin]
+python-source = "python"
+module-name = "itaxotools.calculate_distances"
+features = ["pyo3/extension-module"]
