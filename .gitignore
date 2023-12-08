@@ -1,3 +1,6 @@
 /target/
 **/*.rs.bk
 *.pyd
+
+Pipfile
+Pipfile.lock
