@@ -39,5 +39,5 @@ calc.seq_distances_kimura2p(x, y)  # inf
 
 ## Unit tests
 
-All testing is currently done as part of [TaxI2](
+Only basic tests included. More extensive unit testing is currently done as part of [TaxI2](
     https://github.com/iTaxoTools/TaxI2/blob/main/tests/test_distances.py).
